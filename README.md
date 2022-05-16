@@ -1,6 +1,10 @@
 # 本地环境开发
 
 ```
+python -V
+#Python 3.6.2
+pip -V
+#pip 21.3.1
 $ mkdir build
 $ python3 -m venv build
 $ pip3 install -r requirements.txt
