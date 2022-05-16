@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "server/clover";
+
+message UserInfoRequest {
+	string user_id = 1;
+}
+
+message UserInfoResponse {
+	string msg = 1;
+}
+
+service DjentryStatistics {
+	rpc GetUserInfo(UserInfoRequest) returns (UserInfoResponse);
+}

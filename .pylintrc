@@ -1,0 +1,17 @@
+[MASTER]
+ignore-paths=.*/migrations/.*, .*_pb2(_grpc)?\.py, .*/swagger/.*
+load-plugins=pylint_django
+django-settings-module=djentry.settings
+
+[MESSAGES CONTROL]
+disable=raw-checker-failed,
+        bad-inline-option,
+        locally-disabled,
+        file-ignored,
+        suppressed-message,
+        useless-suppression,
+        deprecated-pragma,
+        use-symbolic-message-instead,
+		missing-module-docstring,
+		missing-function-docstring,
+		invalid-name
