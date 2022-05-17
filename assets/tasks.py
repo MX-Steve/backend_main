@@ -10,7 +10,7 @@ ITSMURL = settings.ITSMURL
 @shared_task
 def add2(x, y):
     time.sleep(2)
-    return x + y
+    return int(x) + int(y)
 
 
 @shared_task

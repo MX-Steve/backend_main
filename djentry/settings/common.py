@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages', 'django.contrib.staticfiles', 'rest_framework',
     'rest_framework.authtoken',  'django_celery_results',
     'django_celery_beat', 'channels', 'assets', 'backend', 'users', "manages",
-    "audit", "tools"
+    "audit", "tools", "chat"
 ]
 
 SWAGGER_SETTINGS = {

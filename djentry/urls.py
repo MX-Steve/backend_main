@@ -26,5 +26,6 @@ urlpatterns = [
     path('audit/', include('audit.urls')),
     path('tools/', include('tools.urls')),
     path('assets/', include('assets.urls')),
+    path('chat/', include('chat.urls')),
     url(r'isAlive', check.as_view()),
 ]
