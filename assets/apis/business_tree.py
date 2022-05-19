@@ -1,6 +1,5 @@
-from assets.apis.swagger.assets import *
 from assets.models import Machine, BusinessEnvironment, BusinessProject, BusinessServices, ServiceToEnv
-from assets.serializers import MachineSerializers, ServicesSerializers, ProjectSerializers, EnvironmentSerializers
+from assets.serializers import MachineSerializers
 from utils import baseview
 from django.http import JsonResponse
 from utils.auth import auth

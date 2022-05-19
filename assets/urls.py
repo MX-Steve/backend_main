@@ -2,10 +2,12 @@ from django.urls import path
 from assets.apis import asset
 from assets.apis import assets_management
 from assets.apis import asset_list
+from assets.apis import choices
 # from assets.apis import summary_total
-# from assets.apis import business_tree
-# from assets.apis import configuration_centre
+from assets.apis import business_tree
+from assets.apis import configuration_centre
 urlpatterns = [
+    path('v1/choices', choices.ChoicesView.as_view(), name='choices'),
     path('v1/zones', asset.ZoneInfoView.as_view(), name='zones'),
     path('v1/device-type', asset.DeviceTypeView.as_view(),
          name='device-type'),
@@ -27,21 +29,21 @@ urlpatterns = [
 #     path('v1/summary-machine',
 #          summary_total.SummaryTotalView.as_view(),
 #          name='summary'),
-#     path('v1/tree-data',
-#          business_tree.BusinessTreeListView.as_view(),
-#          name='tree-data'),
-#     path('v1/tree-machines',
-#          business_tree.MachineTreeListView.as_view(),
-#          name='tree-machines'),
-#     path('v1/environment',
-#          configuration_centre.EnvironmentListView.as_view(),
-#          name='environment'),
-#     path('v1/project',
-#          configuration_centre.ProjectListView.as_view(),
-#          name='project'),
-#     path('v1/services',
-#          configuration_centre.ServiceListView.as_view(),
-#          name='services'),
+    path('v1/tree-data',
+         business_tree.BusinessTreeListView.as_view(),
+         name='tree-data'),
+    path('v1/tree-machines',
+         business_tree.MachineTreeListView.as_view(),
+         name='tree-machines'),
+    path('v1/environment',
+         configuration_centre.EnvironmentListView.as_view(),
+         name='environment'),
+    path('v1/project',
+         configuration_centre.ProjectListView.as_view(),
+         name='project'),
+    path('v1/services',
+         configuration_centre.ServiceListView.as_view(),
+         name='services'),
 #     path('v1/inner/machine',
 #          assets_list.InnerPostMachine.as_view(),
 #          name="post-machine"),
