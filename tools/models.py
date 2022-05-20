@@ -32,7 +32,7 @@ class Articles(models.Model):
     "articles"
     content = models.TextField(max_length=65535, help_text="文章内容")
     title = models.CharField(max_length=250,null=True, help_text="文章标题")
-    # frontend/backend/db/structure/other
+    # frontend/backend/db/structure/other/shell/python/security/network
     type = models.CharField(max_length=50, null=True, help_text="文章类型")
     created_at = models.CharField(max_length=20, default="")
     created_by = models.ForeignKey(User,
