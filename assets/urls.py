@@ -6,8 +6,10 @@ from assets.apis import choices
 # from assets.apis import summary_total
 from assets.apis import business_tree
 from assets.apis import configuration_centre
+from assets.apis import platforms
 urlpatterns = [
     path('v1/choices', choices.ChoicesView.as_view(), name='choices'),
+    path('v1/platform-hosts', platforms.PlatformHostsView.as_view(), name='platform-hosts'),
     path('v1/zones', asset.ZoneInfoView.as_view(), name='zones'),
     path('v1/device-type', asset.DeviceTypeView.as_view(),
          name='device-type'),

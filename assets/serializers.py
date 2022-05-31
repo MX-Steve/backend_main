@@ -1,7 +1,14 @@
 from rest_framework import serializers
 from .models import DeviceType, ZoneInfo, DeviceStatus, IdleAssets, IDC, Machine, RDS, Disk, Domain, Oss, Vpc, CDN, Slb, \
-    Switch, BusinessServices, BusinessProject, BusinessEnvironment, ServiceToEnv, DnsRecords
+    Switch, BusinessServices, BusinessProject, BusinessEnvironment, ServiceToEnv, DnsRecords, PlatformHosts
 import json
+
+
+class PlatformHostsSerializers(serializers.ModelSerializer):
+    """PlatformHosts serializers"""
+    class Meta:
+        model = PlatformHosts
+        fields = "__all__"
 
 
 class DeviceTypeSerializers(serializers.ModelSerializer):
