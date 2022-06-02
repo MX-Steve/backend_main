@@ -1,68 +1,78 @@
 from django.db import models
 
 
+class Platforms(models.Model):
+    """platforms"""
+    pname = models.CharField(max_length=200,
+                             help_text="平台名称",
+                             default=None)
+    last_modified = models.CharField(max_length=100,
+                                     help_text="上次更新时间",
+                                     default=None)
+
+
 class PlatformHosts(models.Model):
     """platform hosts"""
     v_pool = models.CharField(max_length=65,
-                            help_text="虚拟云盘池",
-                            default=None)
+                              help_text="虚拟云盘池",
+                              default=None)
     zone = models.CharField(max_length=65,
                             help_text="zone区",
                             default=None)
     tenant = models.CharField(max_length=250,
-                            help_text="所属租户",
-                            default=None)
+                              help_text="所属租户",
+                              default=None)
     hostname = models.CharField(max_length=250,
-                            help_text="主机名",
-                            default=None)
+                                help_text="主机名",
+                                default=None)
     host_type = models.CharField(max_length=65,
-                            help_text="主机类型",
-                            default=None)
+                                 help_text="主机类型",
+                                 default=None)
     ssh_user = models.CharField(max_length=125,
-                            help_text="ssh账号",
-                            default=None)
+                                help_text="ssh账号",
+                                default=None)
     ssh_pwd = models.CharField(max_length=125,
-                            help_text="ssh账号密码",
-                            default=None)
+                               help_text="ssh账号密码",
+                               default=None)
     ssh_port = models.CharField(max_length=125,
-                            help_text="ssh端口",
-                            default=None)
+                                help_text="ssh端口",
+                                default=None)
     vpc = models.CharField(max_length=125,
-                            help_text="VPC",
-                            default=None)
+                           help_text="VPC",
+                           default=None)
     iso = models.CharField(max_length=125,
-                            help_text="镜像",
-                            default=None)
+                           help_text="镜像",
+                           default=None)
     system_disk_size = models.CharField(max_length=125,
-                            help_text="系统盘",
-                            default=None)
+                                        help_text="系统盘",
+                                        default=None)
     cpus = models.CharField(max_length=125,
                             help_text="cpu核数",
                             default=None)
     memery = models.CharField(max_length=125,
-                            help_text="内存",
-                            default=None)
+                              help_text="内存",
+                              default=None)
     data_disk_size = models.CharField(max_length=125,
-                            help_text="磁盘",
-                            default=None)
+                                      help_text="磁盘",
+                                      default=None)
     data_disk_type = models.CharField(max_length=125,
-                            help_text="磁盘类型",
-                            default=None)
+                                      help_text="磁盘类型",
+                                      default=None)
     host_ip = models.CharField(max_length=125,
-                            help_text="主机IP",
-                            default=None)
+                               help_text="主机IP",
+                               default=None)
     uuid = models.CharField(max_length=125,
                             help_text="UUID",
                             default=None)
     vip = models.CharField(max_length=125,
-                            help_text="VIP",
-                            default=None)
+                           help_text="VIP",
+                           default=None)
     system_type = models.CharField(max_length=125,
-                            help_text="操作系统类型",
-                            default=None)
+                                   help_text="操作系统类型",
+                                   default=None)
     description = models.CharField(max_length=125,
-                            help_text="描述",
-                            default=None)        
+                                   help_text="描述",
+                                   default=None)
     del_tag = models.IntegerField(default=0, help_text="删除标识")
 
 
