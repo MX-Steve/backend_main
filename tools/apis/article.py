@@ -1,4 +1,3 @@
-from turtle import title
 from certifi import contents
 from django.http import JsonResponse
 from utils.auth import auth
