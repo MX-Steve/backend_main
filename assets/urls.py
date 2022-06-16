@@ -6,7 +6,7 @@ from assets.apis import choices
 # from assets.apis import summary_total
 from assets.apis import business_tree
 from assets.apis import configuration_centre
-from assets.apis import platforms
+from assets.apis import platforms, sync_hosts
 urlpatterns = [
     path('v1/choices', choices.ChoicesView.as_view(), name='choices'),
     path('v1/platform-hosts', platforms.PlatformHostsView.as_view(), name='platform-hosts'),
@@ -20,6 +20,7 @@ urlpatterns = [
          name='idle-assets'),
     path('v1/idc', assets_management.IDCView.as_view(), name='idc-add'),
     path('v1/machine', asset_list.MachineListView.as_view(), name='machine'),
+    path('v1/sync-hosts', sync_hosts.Ph2M.as_view(), name='sync-hosts'),
 #     path('v1/rds', assets_list.RdsListView.as_view(), name='rds'),
 #     path('v1/disk', assets_list.DiskListView.as_view(), name='disk'),
 #     path('v1/domain', assets_list.DomainListView.as_view(), name='domain'),
