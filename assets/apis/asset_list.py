@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import logging
 import paramiko
 from django.http import JsonResponse
@@ -29,6 +30,9 @@ class MachineListView(baseview.BaseView):
             idc_id = int(request.GET.get('idc_id')) if request.GET.get(
                 'idc_id') else None
             ip_address = request.GET.get('ip_address')
+            MgrIp = request.GET.get("MgrIp")
+            manager = request.GET.get("manager")
+            cabinet = request.GET.get("cabinet")
             server_type = request.GET.get('server_type')
             status_id = request.GET.get('status_id')
             pageNo = int(request.GET.get('page_no', 1))
@@ -43,6 +47,15 @@ class MachineListView(baseview.BaseView):
                 q.children.append(('server_type', server_type))
             if status_id:
                 q.children.append(('status_id', status_id))
+            if cabinet:
+                obj = '"cabinet": "%s"'%(cabinet)
+                q.children.append(("optional__contains", obj))
+            if MgrIp:
+                obj = '"MgrIp": "%s"'%(MgrIp)
+                q.children.append(("optional__contains", obj))
+            if manager:
+                obj = '"manager": "%s"'%(manager)
+                q.children.append(("optional__contains", obj))
             machine_infos = models.Machine.objects.filter(q)
             total = machine_infos.count()
             start = (pageNo - 1) * pageSize
