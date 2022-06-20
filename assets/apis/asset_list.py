@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import sys
 import json
@@ -54,7 +55,8 @@ class MachineListView(baseview.BaseView):
                 obj = '"MgrIp": "%s"'%(MgrIp)
                 q.children.append(("optional__contains", obj))
             if manager:
-                obj = '"manager": "%s"'%(manager)
+                unicode_manager = manager.encode("unicode-escape").decode().replace("\\","")
+                obj = '"manager": "%s"'%(unicode_manager)
                 q.children.append(("optional__contains", obj))
             machine_infos = models.Machine.objects.filter(q)
             total = machine_infos.count()
