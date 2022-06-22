@@ -27,7 +27,28 @@ class MachineListView(baseview.BaseView):
         :return:
         """
         res_type = request.GET.get('type')
-        if res_type == "get_all_machines":
+        if res_type == "get_all_ips":
+            q = Q()
+            q.children.append(("del_tag", 0))
+            machine_infos = models.Machine.objects.filter(q)
+            total = machine_infos.count()
+            machine_show_infos = machine_infos.values(
+                'id', 'ip_address')
+            data = []
+            for item in machine_show_infos:
+                data.append({
+                    'id': item['id'],
+                    'ip_address': item['ip_address']
+                })
+            msg = {
+                'code': 200,
+                'data': {
+                    'machines': data,
+                    "total": total
+                },
+                'msg': 'success'
+            }
+        elif res_type == "get_all_machines":
             idc_id = int(request.GET.get('idc_id')) if request.GET.get(
                 'idc_id') else None
             ip_address = request.GET.get('ip_address')
