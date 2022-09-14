@@ -21,7 +21,7 @@ class FlowView(baseview.AnyLogin):
         id = request.GET.get("id", 1)
         type = request.GET.get("type", "")
         if type == "names":
-            data =  DataFlow.objects.values("id","name")
+            data =  DataFlow.objects.filter(del_tag=0).values("id","name")
             result = []
             for item in data:
                 result.append({"id":item["id"],"name":item["name"]})
@@ -31,7 +31,7 @@ class FlowView(baseview.AnyLogin):
                 "data": result 
             })
         else:
-            serializer = DataFlowSerializer(DataFlow.objects.filter(id=id), many=True)
+            serializer = DataFlowSerializer(DataFlow.objects.filter(id=id, del_tag=0), many=True)
             result = serializer.data
             return JsonResponse({
                 "code": 200,
@@ -55,7 +55,7 @@ class FlowView(baseview.AnyLogin):
         if job == "UseDemo":
             job = '{"origin":[1000,465],"nodeList":[{"id":"nodeS3WgFnzCI15X58Qw","width":100,"height":80,"coordinate":[-926,-307],"meta":{"prop":"start","name":"开始节点","desc":"流程开始"}}],"linkList":[]}'
             job = escape_string(job)
-            DataFlow.objects.create(name=name, job=job)
+            DataFlow.objects.create(name=name, job=job, del_tag=0)
             return JsonResponse({
                 "code": 200,
                 "msg": "存入 flow 成功",
@@ -63,18 +63,18 @@ class FlowView(baseview.AnyLogin):
             })
         else:
             job = escape_string(job)
-        f = DataFlow.objects.filter(name=name).first()
+        f = DataFlow.objects.filter(name=name, del_tag=0).first()
         if f:
-            DataFlow.objects.filter(name=name).update(job=job)
+            DataFlow.objects.filter(name=name, del_tag=0).update(job=job)
         else:
-            DataFlow.objects.create(name=name, job=job)
+            DataFlow.objects.create(name=name, job=job, del_tag=0)
         return JsonResponse({
             "code": 200,
             "msg": "存入 flow 成功",
             "data": []
         })
 
-    def delete(self, request, args):
+    def delete(self, request, args=None):
         fid = request.data.get('id','')
         print(fid)
         if fid == "":
@@ -83,7 +83,7 @@ class FlowView(baseview.AnyLogin):
                 "msg": "必须传递 id 参数",
                 "data": [] 
             })
-        DataFlow.objects.filter(id=fid).delete()
+        DataFlow.objects.filter(id=fid).update(del_tag=1)
         return JsonResponse({
             "code": 200,
             "msg": "移除 flow name 成功",

@@ -44,6 +44,7 @@ class Articles(models.Model):
 class DataFlow(models.Model):
     name = models.CharField(max_length=500, help_text="流程名称")
     job = models.TextField(max_length=65535, help_text="流程内容")
+    del_tag = models.SmallIntegerField(default=0, help_text="删除标识")
 
     class Meta:
         managed = False
