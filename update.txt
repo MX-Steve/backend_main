@@ -1,0 +1,19 @@
+1. 新增表 
+create table assets_platform_qixin_zone(
+    `id` bigint(20) NOT NULL AUTO_INCREMENT,
+    `deps` varchar(250) NOT NULL,
+    `cpu` int(11) NOT NULL DEFAULT '0',
+    `mem` int(11) NOT NULL DEFAULT '0',
+    `disk` int(11) NOT NULL DEFAULT '0',
+    `num` int(11) NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+2. 导入数据
+insert into assets_platform_qixin_zone(deps,cpu,mem,disk,num) values("BSS-CRM",59406,167475,3844179,1568);
+insert into assets_platform_qixin_zone(deps,cpu,mem,disk,num) values("BSS-计费",225302,383697,7360869,2146);
+insert into assets_platform_qixin_zone(deps,cpu,mem,disk,num) values("EDA",29848,72076,5358544,1012);
+insert into assets_platform_qixin_zone(deps,cpu,mem,disk,num) values("ITM",116461,472537,73855624,3760);
+insert into assets_platform_qixin_zone(deps,cpu,mem,disk,num) values("MSS",7461,16463,670013,509);
+insert into assets_platform_qixin_zone(deps,cpu,mem,disk,num) values("OSS",65070,146505,2985188,1850);
+insert into assets_platform_qixin_zone(deps,cpu,mem,disk,num) values("规划",1762,4777,79300,192);
+insert into assets_platform_qixin_zone(deps,cpu,mem,disk,num) values("清结算",1960,5529,226223,147);

@@ -9,6 +9,17 @@ from audit.apis.audit import PutAudit
 from utils.auth import auth
 
 
+class CeleryBeatView(baseview.BaseView):
+    @auth("jobs.list.edit")
+    def put(self, request, args=None):
+        code, out = restart_beat()
+        res = {"code": 200, "data": {}, "msg": "beat重启成功"}
+        if code != 0:
+            res = {"code": 500, "data": {}, "msg": "beat重启失败"}
+        PutAudit(request, res)
+        return JsonResponse(res)
+
+
 class IntervalScheduleView(baseview.BaseView):
     """[interval schedule view]
     get: 
@@ -111,19 +122,19 @@ class PeriodicTaskView(baseview.BaseView):
         if type == "enabled":
             PeriodicTask.objects.filter(id=int(data["id"])).update(
                 enabled=int(data["enabled"]), updater=request.user.username)
-            code, out = restart_beat()
+            # code, out = restart_beat()
             res = {"code": 200, "data": {}, "msg": "开关更新成功"}
-            if code != 0:
-                res = {"code": 500, "data": {}, "msg": "beat重启失败"}
+            # if code != 0:
+            #     res = {"code": 500, "data": {}, "msg": "beat重启失败"}
             PutAudit(request, res)
             return JsonResponse(res)
         if type == "one_off":
             PeriodicTask.objects.filter(id=int(data["id"])).update(
                 one_off=int(data["one_off"]), updater=request.user.username)
-            code, out = restart_beat()
+            # code, out = restart_beat()
             res = {"code": 200, "data": {}, "msg": "一次性任务更新成功"}
-            if code != 0:
-                res = {"code": 500, "data": {}, "msg": "beat重启失败"}
+            # if code != 0:
+            #     res = {"code": 500, "data": {}, "msg": "beat重启失败"}
             PutAudit(request, res)
             return JsonResponse(res)
         if type == "modify":
@@ -135,10 +146,10 @@ class PeriodicTaskView(baseview.BaseView):
             if data["updater"] == "":
                 data["updater"] = request.user.username
             PeriodicTask.objects.filter(id=int(data["id"])).update(**data)
-            code, out = restart_beat()
+            # code, out = restart_beat()
             res = {"code": 200, "data": [], "msg": "更新任务成功"}
-            if code != 0:
-                res = {"code": 500, "data": {}, "msg": "beat重启失败"}
+            # if code != 0:
+            #     res = {"code": 500, "data": {}, "msg": "beat重启失败"}
             PutAudit(request, res)
             return JsonResponse(res)
         res = {"code": 10003, "data": [], "msg": "type 值不对"}

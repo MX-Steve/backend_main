@@ -37,6 +37,13 @@ class PeriodicTaskSerializers(serializers.ModelSerializer):
             un2 = user2.last_name.strip() + user2.first_name.strip()
             if un2:
                 data["updater"] = un2
+        # if data["args"]:
+        #    data["task"] = data["task"] + \
+        #        "("+data["args"].replace("[", "").replace("]", "")+")"
+        # if data["kwargs"]:
+        #    data["task"] = data["task"] + \
+        #        "("+data["kwargs"].replace("{",
+        #                                   "").replace("}", "").replace(":", "=") + ")"
         return data
 
 
@@ -60,11 +67,5 @@ class CrontabScheduleSerializers(serializers.ModelSerializer):
             un = user.last_name.strip() + user.first_name.strip()
             if un:
                 data["creater"] = un
-        if data["args"]:
-            data["task"] = data["task"] + \
-                "("+data["args"].replace("[", "").replace("]", "")+")"
-        if data["kwargs"]:
-            data["task"] = data["task"] + \
-                "("+data["kwargs"].replace("{",
-                                           "").replace("}", "").replace(":", "=") + ")"
+        
         return data

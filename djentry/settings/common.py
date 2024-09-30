@@ -98,7 +98,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -159,78 +159,30 @@ ADMINS = (('admin_name', 'mx_steve@163.com'), )
 MANAGERS = ADMINS
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 
-# celery时区设置，建议与Django settings中TIME_ZONE同样时区，防止时差
-# Django设置时区需同时设置USE_TZ=True和TIME_ZONE = 'Asia/Shanghai'
+CELERY_BROKER_URL = "redis://:Xwzsl180aT@172.17.0.1:38084/4"
 CELERY_TIMEZONE = TIME_ZONE
 
-# celery内容等消息的格式设置，默认json
+# 支持数据库django-db和缓存django-cache存储任务状态及结果
 # 建议选django-db
 CELERY_RESULT_BACKEND = "django-db"
-CELERY_ACCEPT_CONTENT = [
-    'application/json',
-]
+# celery内容等消息的格式设置，默认json
+CELERY_ACCEPT_CONTENT = ['application/json', ]
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-
-# 为任务设置超时时间，单位秒。超时即中止，执行下个任务。
-CELERY_TASK_TIME_LIMIT = 300
-
-# 为存储结果设置过期日期，默认1天过期。如果beat开启，Celery每天会自动清除。
-# 设为0，存储结果永不过期
-CELERY_RESULT_EXPIRES = 0
-
-# 任务限流
-CELERY_TASK_ANNOTATIONS = {'tasks.add': {'rate_limit': '10/s'}}
-
-# Worker并发数量，一般默认CPU核数，可以不设置
-CELERY_WORKER_CONCURRENCY = 2
-
-# 每个worker执行了多少任务就会死掉，默认是无限的
-CELERY_WORKER_MAX_TASKS_PER_CHILD = 200
-# 任务调度器 DatabaseScheduler
+DJANGO_CELERY_BEAT_TZ_AWARE = False 
+# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-# CELERY_ROUTES = {'feed.tasks.import_feed': {'queue': 'feeds'}}
-CELERY_QUEUES = (Queue("default", Exchange("default"), routing_key="default"),
-                 Queue("tasks_add2",
-                       Exchange("tasks_add2"),
-                       routing_key="tasks_add2"),
-                 Queue("tasks_cdn_get",
-                       Exchange("tasks_cdn_get"),
-                       routing_key="tasks_cdn_get"))
-CELERY_ROUTES = {
-    'assets.tasks.add2': {
-        "queue": "tasks_add2",
-        "routing_key": "tasks_add2"
-    },
-    'assets.tasks.cdn_get': {
-        "queue": "tasks_cdn_get",
-        "routing_key": "tasks_cdn_get"
-    }
+
+from datetime import timedelta
+CELERY_BEAT_SCHEDULE = {
+    #  "add-every-30s": {
+    #      "task": "app.tasks.add",
+    #      'schedule': 30.0, # 每30秒执行1次
+    #      'args': (3, 8) # 传递参数-
+    #  },
+    #  "add-every-day": {
+    #      "task": "app.tasks.add",
+    #      'schedule': timedelta(hours=1), # 每小时执行1次
+    #      'args': (3, 8) # 传递参数-
+    #  },
 }
-ENABLE_LDAP = environ.get("ENABLE") or "False"
-if ENABLE_LDAP == "True":
-    import ldap
-    from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
-    AUTHENTICATION_BACKENDS = (
-        'django_auth_ldap.backend.LDAPBackend',  # 配置为先使用LDAP认证，如通过认证则不再使用后面的认证方式
-        'django.contrib.auth.backends.ModelBackend',  # django系统中手动创建的用户也可使用，优先级靠后。注意这2行的顺序
-    )
-    AUTH_LDAP_SERVER_URI = environ.get("AUTH_LDAP_SERVER_URI")
-    AUTH_LDAP_BIND_DN = environ.get("AUTH_LDAP_BIND_DN")
-    AUTH_LDAP_BIND_PASSWORD = environ.get("AUTH_LDAP_BIND_PASSWORD")
-    AUTH_LDAP_USER_SEARCH = LDAPSearch(environ.get("USER_SEARCH"),
-                                       ldap.SCOPE_SUBTREE,
-                                       "(sn=%(user)s)")
-    # AUTH_LDAP_CONNECTION_OPTIONS = {
-    #     ldap.OPT_DEBUG_LEVEL: 1,
-    #     ldap.OPT_REFERRALS: 0,
-    # }
-    AUTH_LDAP_FIND_GROUP_PERMS = True
-    AUTH_LDAP_ALWAYS_UPDATE_USER = True  # 每次登录从ldap同步用户信息
-    AUTH_LDAP_USER_ATTR_MAP = {  # key为archery.sql_users字段名，value为ldap中字段名，用户同步信息
-        "username": "sAMAccountName",
-        # "first_name": "displayname",
-        "first_name": "givenName",
-        "last_name": "sn",
-        "email": "mail"
-    }

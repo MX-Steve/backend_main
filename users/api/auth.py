@@ -355,3 +355,13 @@ class BtnCheckView(baseview.BaseView):
                 elif "conn" in item:
                     obj["conn"] = 1
         return JsonResponse({"code": 200, "data": obj, "msg": "按钮鉴权数据"})
+
+class RobotMsgView(baseview.BaseView):
+    def post(self, request, args=None):
+        role = request.data["role"]
+        username = request.user.username
+        role_ids = User.objects.filter(
+            username=username).first().roles.strip('[').strip(']').split(',')
+        print(role_ids)
+        print(role)
+        return JsonResponse({"code": 200, "data": [], "msg": "已收到，但是不给你审批，请找负责人转述"})

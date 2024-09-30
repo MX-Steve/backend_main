@@ -64,6 +64,8 @@ def PutAudit(request, res):
     operater = request.user.username
     req_data = json.dumps(request.data)
     req_url = request.path
+    if req_url == "/tools/v1/process-history":
+        req_data=json.dumps(request.data["req"])
     res_data = json.dumps(res)
     AuditHistory.objects.create(operater=operater,
                                 operate_time=now(),

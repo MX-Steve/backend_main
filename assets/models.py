@@ -11,6 +11,161 @@ class Platforms(models.Model):
                                      default=None)
 
 
+class PlatformQixinMore(models.Model):
+    "platform qixin more"
+    room_record =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    resource_pool_cluster =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    distributed_store_cluster =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    suzhuji_jilu =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    rack =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    purchase_period =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    ip_input =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    isvirtual =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    hostname =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    os_version_type =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    whetherservicpoint =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    environment =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    jsorglabel =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    power =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    inst_name_cn =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    staffname =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    ownteam =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    paas_busisystemname_staffname =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    quantity =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    classkey  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    server_use_type  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    laiyuan  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    MachineBrand  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    Machine_type_model  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    CreateTime  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    assetStatus  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    business_ip  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    Server_Room  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    Rack  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    CPU_type  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    CPU_architecture  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    weibao  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    maintenance_expires  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    Purchase_period  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    gpu  =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    ip_num =  models.SmallIntegerField(default=0, help_text="")
+    ip_weight =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    system_cpu_load_pusedcalu =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    vm_memory_size_pused =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    vm_memory_size_pusedcalu =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    system_cpu_num_online =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    vm_memory_size_total =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    custom_pused_storage =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    custom_total_storage =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    host_serial =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    system_cpu_load_pusedcalu_max =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    vm_memory_size_pused_max =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    vm_memory_size_pusedcalu_max =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    date_created =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    vip =  models.CharField(max_length=255,
+                              help_text="",
+                              default=None)
+    class Meta:
+        managed = False
+        db_table = 'js_os_subsystem_total'
+
+
 class PlatformHosts(models.Model):
     """platform hosts"""
     v_pool = models.CharField(max_length=65,
@@ -904,3 +1059,78 @@ class DnsRecords(models.Model):  # 域名解析记录
                                   null=True,
                                   blank=True,
                                   verbose_name='代理状态')  # cloudflare
+
+class PlatformQixinZone(models.Model):
+    """platform qixin zone"""
+    deps = models.CharField(max_length=250,
+                                help_text="主机名",
+                                default="")
+    cpu = models.FloatField(default=0, help_text="cpu")
+    mem = models.FloatField(default=0, help_text="mem")
+    disk = models.FloatField(default=0, help_text="disk")
+    num = models.FloatField(default=0, help_text="num")
+    
+    class Meta:
+        managed = False
+        db_table = 'assets_platform_qixin_zone'
+
+class PlatformQixin(models.Model):
+    """platform qixin"""
+    hostname = models.CharField(max_length=250,
+                                help_text="主机名",
+                                default="")
+    host_ip = models.CharField(max_length=125,
+                               help_text="主机IP",
+                               default="")
+    proxy = models.CharField(max_length=125,
+                             help_text="代理节点",
+                             default="")
+    cpu_avg = models.FloatField(default=0, help_text="CPU月平均使用率")
+    cpu_max = models.FloatField(default=0, help_text="CPU月平均使用率")
+    cpu_top_avg = models.FloatField(default=0, help_text="CPU月平均使用率")
+    mem_pused_avg = models.FloatField(default=0, help_text="CPU月平均使用率")
+    mem_pused_calu_avg = models.FloatField(default=0, help_text="CPU月平均使用率")
+    mem_pused_max = models.FloatField(default=0, help_text="CPU月平均使用率")
+    mem_pused_max = models.FloatField(default=0, help_text="CPU月平均使用率")
+    mem_top_avg = models.FloatField(default=0, help_text="CPU月平均使用率")
+    xitong = models.CharField(max_length=250,
+                              help_text="所属系统",
+                              default="")
+    fuwu = models.CharField(max_length=250,
+                            help_text="所属服务",
+                            default="")
+    zone = models.CharField(max_length=150,
+                            help_text="所属域",
+                            default="")
+    cpu_total = models.IntegerField(default=0, help_text="CPU核数")
+    mem_total = models.IntegerField(default=0, help_text="总内存大小")
+    disk_total = models.IntegerField(default=0, help_text="磁盘空间")
+    xuliehao = models.CharField(max_length=250,
+                                help_text="主机序列号",
+                                default="")
+    xitongleixing = models.CharField(max_length=250,
+                                     help_text="主机类型",
+                                     default="")
+    jifang = models.CharField(max_length=250,
+                              help_text="机房",
+                              default="")
+    jijia = models.CharField(max_length=250,
+                             help_text="机架",
+                             default="")
+    fuzeren = models.CharField(max_length=350,
+                               help_text="负责人",
+                               default="")
+    vip = models.CharField(max_length=50,
+                                    help_text="机器VIP",
+                                    default="")
+    xitongbanben = models.CharField(max_length=50,
+                                    help_text="操作系统版本",
+                                    default="")
+    insert_date = models.CharField(max_length=49,
+                                   help_text="插入日期",
+                                   default="")
+    del_tag = models.SmallIntegerField(default=0, help_text="删除标识")
+
+    class Meta:
+        managed = False
+        db_table = 'assets_platform_qixin'

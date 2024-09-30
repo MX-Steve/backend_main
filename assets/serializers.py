@@ -1,8 +1,25 @@
 from rest_framework import serializers
 from .models import DeviceType, ZoneInfo, DeviceStatus, IdleAssets, IDC, Machine, RDS, Disk, Domain, Oss, Vpc, CDN, Slb, \
-    Switch, BusinessServices, BusinessProject, BusinessEnvironment, ServiceToEnv, DnsRecords, PlatformHosts
+    Switch, BusinessServices, BusinessProject, BusinessEnvironment, ServiceToEnv, DnsRecords, PlatformHosts, PlatformQixin, PlatformQixinZone, PlatformQixinMore
 import json
 
+class PlatformQixinZoneSerializers(serializers.ModelSerializer):
+    """PlatformQixinZone serializers"""
+    class Meta:
+        model = PlatformQixinZone
+        fields = "__all__"
+
+class PlatformQixinSerializers(serializers.ModelSerializer):
+    """PlatformQixin serializers"""
+    class Meta:
+        model = PlatformQixin
+        fields = "__all__"
+
+class PlatformQixinMoreSerializers(serializers.ModelSerializer):
+    """PlatformQixinMore serializers"""
+    class Meta:
+        model = PlatformQixinMore
+        fields = "__all__"
 
 class PlatformHostsSerializers(serializers.ModelSerializer):
     """PlatformHosts serializers"""

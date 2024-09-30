@@ -11,4 +11,5 @@ urlpatterns = [
     path('v1/logout', auth.LogoutView.as_view(), name='logout'),
     path('v1/dashboard', dashboard.DashboardView.as_view(), name='dash'),
     path('v1/btn-check', auth.BtnCheckView.as_view(), name='btn-check'),
+    path('v1/robot-msg', auth.RobotMsgView.as_view(), name='robot-msg'),
 ]

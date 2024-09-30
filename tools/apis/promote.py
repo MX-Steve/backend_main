@@ -9,39 +9,45 @@ from audit.apis.audit import PutAudit
 from django.db.models import Count, Q
 
 
-class AlarmClockView(baseview.BaseView):
+class PromoteClockView(baseview.BaseView):
     """
     get:
-        获取闹钟
+        获取任务
     put:
-        更新闹钟
+        更新任务
     post:
-        新增闹钟
+        新增任务
     delete:
-        删除闹钟
+        删除任务
     """
-    @auth("tools.alarm.view")
+    @auth("tools.promote.view")
     def get(self, request, args=None):
         user = User.objects.filter(username=request.user.username).first()
-        id = request.GET.get('id', '')
-        name = request.GET.get('name', '')
-        pageNo = int(request.GET.get('page_no', 1))
-        pageSize = int(request.GET.get('page_size', 10))
         start = request.GET.get("start", "")
         end = request.GET.get("end", "")
+        id = request.GET.get('id', '')
+        name = request.GET.get('name', '')
+        parent_id = request.GET.get('parent_id', 0)
+        op = request.GET.get('op', '')
+        pageNo = int(request.GET.get('page_no', 1))
+        pageSize = int(request.GET.get('page_size', 10))
         q = Q()
         q.children.append(("del_tag", 0))
         if id:
             q.children.append(('id', id))
-
+        if op:
+            q.children.append(('op', op))
+        if parent_id:
+            q.children.append(('parent_id', parent_id))
         if name:
             q.children.append(("name__contains", name))
         if start:
-            q.children.append(("alarm_time__gt", start))
+            q.children.append(("created_at__gt", start))
         if end:
-            q.children.append(("alarm_time__lt", end))
+            q.children.append(("created_at__lt", end))
         q.children.append(("created_by", user))
-        serializer = AlarmClockSerializer(AlarmClock.objects.filter(q).order_by("-alarm_time"),
+        q.children.append(("del_tag", 0))
+        serializer = PromoteClockSerializer(PromoteClock.objects.filter(q).order_by("-created_at"),
                                           many=True)
         data = []
         total = len(serializer.data)
@@ -49,56 +55,54 @@ class AlarmClockView(baseview.BaseView):
         return JsonResponse({
             "code": 200,
             "data": {
-                "alarms": data,
+                "promotes": data,
                 "total": total
             },
-            "msg": "获取闹钟成功"
+            "msg": "获取任务成功"
         })
 
-    @auth("tools.alarm.add")
+    @auth("tools.promote.add")
     def post(self, request, args=None):
         data = request.data
-        res = {"code": 200, "data": {}, "msg": "新增闹钟成功"}
-        if AlarmClock.objects.filter(name=data["name"], del_tag=0).exists():
-            res = {"code": 10001, "data": {}, "msg": "闹钟已经存在，无法新增"}
+        res = {"code": 200, "data": {}, "msg": "新增任务成功"}
+        if PromoteClock.objects.filter(name=data["name"], del_tag=0).exists():
+            res = {"code": 10001, "data": {}, "msg": "任务已经存在，无法新增"}
         else:
             user = User.objects.filter(username=request.user.username).first()
-            data["alarm_time"] = data["alarm_time"].replace("T", " ").split(".")[
-                0]
-            AlarmClock.objects.create(created_by=user, **data)
+            PromoteClock.objects.create(created_by=user, **data)
         PutAudit(request, res)
         return JsonResponse(res)
 
-    @auth("tools.alarm.del")
+    @auth("tools.promote.del")
     def delete(self, request, args=None):
         data = request.data
-        res = {"code": 200, "data": {}, "msg": "删除闹钟成功"}
+        res = {"code": 200, "data": {}, "msg": "删除任务成功"}
         if "id" not in data:
             res = {"code": 10003, "data": {}, "msg": "需要携带参数 id"}
         else:
-            AlarmClock.objects.filter(id=data["id"]).update(del_tag=1)
+            PromoteClock.objects.filter(id=data["id"]).update(del_tag=1)
         PutAudit(request, res)
         return JsonResponse(res)
 
-    @auth("tools.alarm.edit")
+    @auth("tools.promote.edit")
     def put(self, request, args=None):
         data = request.data
-        res = {"code": 200, "data": {}, "msg": "闹钟更新成功"}
-        needs = {"id", "name", "desc", "alarm_time", "music"}
+        res = {"code": 200, "data": {}, "msg": "任务更新成功"}
+        needs = {"id", "name", "desc", "lv", "finish", "op", "parent_id"}
         if set(data.keys()).intersection(needs) != needs:
             res = {"code": 10003, "data": {},
-                   "msg": "需要携带参数 id, name, desc, alarm_time, music"}
+                   "msg": "需要携带参数 id, name, desc, lv, finish, op, parent_id"}
         else:
-            if not AlarmClock.objects.filter(id=data["id"]).exists():
-                res = {"code": 10002, "data": {}, "msg": "闹钟不存在，无法更新"}
+            if not PromoteClock.objects.filter(id=data["id"]).exists():
+                res = {"code": 10002, "data": {}, "msg": "任务不存在，无法更新"}
             else:
-                data["alarm_time"] = data["alarm_time"].replace("T", " ").split(".")[
-                    0]
-                AlarmClock.objects.filter(id=data["id"]).update(
+                PromoteClock.objects.filter(id=data["id"]).update(
                     name=data["name"],
                     desc=data["desc"],
-                    alarm_time=data["alarm_time"],
-                    music=data["music"],
+                    lv=data["lv"],
+                    finish=data["finish"],
+                    op=data["op"],
+                    parent_id=data["parent_id"],
                     created_at=now(),
                     created_by=request.user)
         PutAudit(request, res)

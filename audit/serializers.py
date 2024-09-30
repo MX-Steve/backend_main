@@ -34,6 +34,12 @@ def tools_obj_reverse(data):
         key = "食谱"
     elif data["req_url"].endswith("/articles"):
         key = "资料"
+    elif data["req_url"].endswith("/process-history"):
+        key = "执行历史"
+    elif data["req_url"].endswith("/process"):
+        key = "流程"
+    elif data["req_url"].endswith("/article-down"):
+        key = "文章下载"
     else:
         key = "未知"
     if data["req_method"] == "POST":
